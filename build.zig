@@ -11,23 +11,11 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-    lib.addIncludePath("vendor/move/include");
-    lib.addIncludePath("vendor/container_hash/include");
-    lib.addIncludePath("vendor/config/include");
-    lib.addIncludePath("vendor/describe/include");
-    lib.addIncludePath("vendor/assert/include");
-    lib.addIncludePath("vendor/static_assert/include");
-    lib.addIncludePath("vendor/type_traits/include");
     lib.addIncludePath("include");
-
-    lib.installHeadersDirectory("vendor/move/include", "");
-    lib.installHeadersDirectory("vendor/describe/include", "");
-    lib.installHeadersDirectory("vendor/container_hash/include", "");
-    lib.installHeadersDirectory("vendor/config/include", "");
-    lib.installHeadersDirectory("vendor/assert/include", "");
-    lib.installHeadersDirectory("vendor/static_assert/include", "");
-    lib.installHeadersDirectory("vendor/type_traits/include", "");
+    // bypass zig-pkg
+    lib.addCSourceFile("test/dummy.cpp", &.{});
     lib.installHeadersDirectory("include", "");
+    b.installArtifact(lib);
 
     if (tests) {
         buildTest(b, .{

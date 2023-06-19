@@ -1,0 +1,5 @@
+.{
+    .name = "boost.intrusive",
+    .version = "1.83.0",
+    .license = "BSL-1.0",
+}
